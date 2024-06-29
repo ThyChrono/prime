@@ -2,6 +2,9 @@
 targetDir = "%{wks.location}/bin/%{prj.name}"
 objDir = "%{wks.location}/bin-int"
 
+includeDirs = {}
+includeDirs["entt"] = "%{wks.location}/vendor/entt/include"
+
 workspace "prime"
     startproject "prime-editor"
 

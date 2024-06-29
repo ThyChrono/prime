@@ -20,3 +20,8 @@ project "prime"
     {
         "src"
     }
+
+    externalincludedirs 
+    {
+        "%{includeDirs.entt}"
+    }

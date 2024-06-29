@@ -2,4 +2,6 @@
 
 // core
 #include "core/defines.h"
+#include "core/dispatcher.h"
+#include "core/events.h"
 #include "core/game.h"

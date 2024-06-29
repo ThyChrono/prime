@@ -19,6 +19,11 @@ project "prime-editor"
         "%{wks.location}/prime/src"
     }
 
+    externalincludedirs 
+    {
+        "%{includeDirs.entt}"
+    }
+
     links
     {
         "prime"
