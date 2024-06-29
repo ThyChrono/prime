@@ -84,6 +84,9 @@ static_assert(sizeof(f32) == 4, "Expected f32 to be 4 bytes.");
 /** @brief Assert f64 to be 8 bytes.*/
 static_assert(sizeof(f64) == 8, "Expected f64 to be 8 bytes.");
 
+/** @brief window handle.*/
+using WindowHandle = void*;
+
 // platform detection
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
 #define PPLATFORM_WINDOWS 1

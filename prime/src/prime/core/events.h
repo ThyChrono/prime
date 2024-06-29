@@ -4,8 +4,6 @@
 
 namespace prime::core {
 
-	using WindowHandle = void*;
-
 	class WindowResizeEvent
 	{
 	private:
