@@ -25,7 +25,8 @@ project "prime"
     {
         "%{includeDirs.entt}",
         "%{includeDirs.spdlog}",
-        "%{includeDirs.glad}"
+        "%{includeDirs.glad}",
+        "%{includeDirs.glm}"
     }
 
     links

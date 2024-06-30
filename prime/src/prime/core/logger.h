@@ -1,6 +1,7 @@
 #pragma once
 
 #include "defines.h"
+#include "prime/maths/maths.h"
 
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
@@ -19,6 +20,37 @@ namespace prime::core
 		static std::shared_ptr<spdlog::logger>& get() { return s_handle; }
 	};
 }
+
+// types logging
+// vec2
+template <>
+struct fmt::formatter<prime::maths::vec2> : fmt::formatter<std::string>
+{
+    auto format(prime::maths::vec2 vec, format_context& ctx) const -> decltype(ctx.out())
+    {
+        return format_to(ctx.out(), "vec 2 ({0}, {1})", vec.x, vec.y);
+    }
+};
+
+// vec3
+template <>
+struct fmt::formatter<prime::maths::vec3> : fmt::formatter<std::string>
+{
+    auto format(prime::maths::vec3 vec, format_context& ctx) const -> decltype(ctx.out())
+    {
+        return format_to(ctx.out(), "vec 3 ({0}, {1}, {2})", vec.x, vec.y, vec.z);
+    }
+};
+
+// vec4
+template <>
+struct fmt::formatter<prime::maths::vec4> : fmt::formatter<std::string>
+{
+    auto format(prime::maths::vec4 vec, format_context& ctx) const -> decltype(ctx.out())
+    {
+        return format_to(ctx.out(), "vec 4 ({0}, {1}, {2}, {3})", vec.x, vec.y, vec.z, vec.w);
+    }
+};
 
 #ifdef PCONFIG_DEBUG
 #define PTRACE(...)         prime::core::Logger::get()->trace(__VA_ARGS__)

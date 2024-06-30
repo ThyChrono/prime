@@ -8,6 +8,9 @@
 #include "core/logger.h"
 #include "core/window.h"
 
+// maths
+#include "maths/maths.h"
+
 // renderer
 #include "renderer/context.h"
 #include "renderer/renderer.h"
