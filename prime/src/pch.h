@@ -18,6 +18,7 @@
 #include <map>
 
 #include "prime/core/defines.h"
+#include "prime/core/assert.h"
 
 #ifdef PPLATFORM_WINDOWS
 #include <windows.h>
