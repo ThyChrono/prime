@@ -2,9 +2,11 @@
 targetDir = "%{wks.location}/bin/%{prj.name}"
 objDir = "%{wks.location}/bin-int"
 
+-- include directories
 includeDirs = {}
 includeDirs["entt"] = "%{wks.location}/vendor/entt/include"
 includeDirs["spdlog"] = "%{wks.location}/vendor/spdlog/include"
+includeDirs["glad"] = "%{wks.location}/vendor/glad/include"
 
 workspace "prime"
     startproject "prime-editor"
@@ -48,5 +50,11 @@ workspace "prime"
             "PCONFIG_RELEASE"
         }
 
-    include "prime/prime.lua"
-    include "prime-editor/prime-editor.lua"
+    group "core"
+        include "prime/prime.lua"
+        include "prime-editor/prime-editor.lua"
+    group ""
+
+    group "vendor"
+        include "vendor/glad/glad.lua"
+    group ""

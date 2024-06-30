@@ -17,6 +17,7 @@ namespace prime::core
 	void Engine::run(Game* game)
 	{
 		Logger::init();
+		renderer::createDummyContext();
 		GameConfig gc = game->GetConfig();
 
 		// window
@@ -36,7 +37,9 @@ namespace prime::core
 		{
 			pollEvents();
 			Dispatcher::update();
+
 			game->update();
+			s_data.window.update();
 		}
 
 		game->shutdown();

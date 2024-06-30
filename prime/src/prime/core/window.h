@@ -1,6 +1,7 @@
 #pragma once
 
 #include "defines.h"
+#include "prime/renderer/context.h"
 
 namespace prime::core {
 
@@ -15,10 +16,13 @@ namespace prime::core {
 	private:
 		WindowConfig m_config;
 		WindowHandle m_handle = nullptr;
+		Scope<renderer::Context> m_context;
 
 	public:
 		void init(const WindowConfig& config);
 		void shutdown();
+
+		void update();
 	};
 
 	void pollEvents();

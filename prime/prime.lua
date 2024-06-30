@@ -24,5 +24,11 @@ project "prime"
     externalincludedirs 
     {
         "%{includeDirs.entt}",
-        "%{includeDirs.spdlog}"
+        "%{includeDirs.spdlog}",
+        "%{includeDirs.glad}"
+    }
+
+    links
+    {
+        "glad"
     }

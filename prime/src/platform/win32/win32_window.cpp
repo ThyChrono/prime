@@ -46,11 +46,19 @@ namespace prime::core
 		ShowWindow(window, SW_SHOW);
 		UpdateWindow(window);
 		m_handle = window;
+
+		// context
+		m_context = renderer::Context::create(m_handle);
 	}
 
 	void Window::shutdown()
 	{
 		DestroyWindow((HWND)m_handle);
+	}
+
+	void Window::update()
+	{
+		m_context->swapBuffers();
 	}
 
 	void pollEvents()
