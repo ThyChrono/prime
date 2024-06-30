@@ -3,6 +3,7 @@
 #include "engine.h"
 #include "dispatcher.h"
 #include "events.h"
+#include "logger.h"
 
 namespace prime::core
 {
@@ -16,6 +17,8 @@ namespace prime::core
 
 	void Engine::run(Game* game)
 	{
+		Logger::init();
+		PINFO("Welcome to prime engine");
 		GameConfig gc = game->GetConfig();
 
 		// window
@@ -41,5 +44,6 @@ namespace prime::core
 		game->shutdown();
 		Dispatcher::clear();
 		s_data.window.shutdown();
+		Logger::shutdown();
 	}
 }

@@ -21,7 +21,8 @@ project "prime-editor"
 
     externalincludedirs 
     {
-        "%{includeDirs.entt}"
+        "%{includeDirs.entt}",
+        "%{includeDirs.spdlog}"
     }
 
     links

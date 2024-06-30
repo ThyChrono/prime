@@ -5,4 +5,5 @@
 #include "core/dispatcher.h"
 #include "core/events.h"
 #include "core/game.h"
+#include "core/logger.h"
 #include "core/window.h"

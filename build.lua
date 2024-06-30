@@ -4,6 +4,7 @@ objDir = "%{wks.location}/bin-int"
 
 includeDirs = {}
 includeDirs["entt"] = "%{wks.location}/vendor/entt/include"
+includeDirs["spdlog"] = "%{wks.location}/vendor/spdlog/include"
 
 workspace "prime"
     startproject "prime-editor"
