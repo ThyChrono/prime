@@ -15,4 +15,6 @@ namespace prime::maths
 
     /** @brief a mat4 */
     using mat4 = glm::mat4;
+
+    mat4 getTransform(const vec3& pos);
 }
