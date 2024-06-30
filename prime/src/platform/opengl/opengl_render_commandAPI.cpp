@@ -15,4 +15,9 @@ namespace prime::renderer
 	{
 		glClearColor(color.r, color.g, color.b, color.a);
 	}
+
+	void OpenGLRenderCommandAPI::viewportResize(u32 width, u32 height)
+	{
+		glViewport(0, 0, width, height);
+	}
 }

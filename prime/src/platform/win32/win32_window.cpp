@@ -11,8 +11,8 @@
 
 LRESULT CALLBACK wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-namespace prime::core
-{
+namespace prime::core {
+
 	void Window::init(const WindowConfig& config)
 	{
 		HINSTANCE instance = GetModuleHandleA(nullptr);
@@ -43,9 +43,12 @@ namespace prime::core
 			NULL, NULL, instance, NULL);
 
 		assert(window);
+		m_config = config;
+		m_handle = window;
+		SetWindowLongPtr(window, GWLP_USERDATA, (LONG_PTR)&m_config);
+
 		ShowWindow(window, SW_SHOW);
 		UpdateWindow(window);
-		m_handle = window;
 
 		// context
 		m_context = renderer::Context::create(m_handle);
@@ -84,6 +87,13 @@ static LRESULT CALLBACK wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
 			core::Dispatcher::get().enqueue<core::WindowCloseEvent>(hWnd);
 			PostQuitMessage(0);
 			break;
+		}
+		case WM_SIZE:
+		{
+			core::WindowConfig& config = *(core::WindowConfig*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+			config.width = LOWORD(lParam);
+			config.height = HIWORD(lParam);
+			core::Dispatcher::get().enqueue<core::WindowResizeEvent>(hWnd, config.width, config.height);
 		}
 	}
 	return DefWindowProc(hWnd, message, wParam, lParam);

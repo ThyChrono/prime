@@ -11,5 +11,7 @@ namespace prime::renderer
 
 		static void clear();
 		static void clearColor(const maths::vec4& color);
+
+		static void viewportResize(u32 width, u32 height);
 	};
 }

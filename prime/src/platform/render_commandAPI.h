@@ -13,6 +13,8 @@ namespace prime::renderer {
 		virtual void clear() = 0;
 		virtual void clearColor(const maths::vec4& color) = 0;
 
+		virtual void viewportResize(u32 width, u32 height) = 0;
+
 		static Scope<RenderCommandAPI> create();
 	};
 

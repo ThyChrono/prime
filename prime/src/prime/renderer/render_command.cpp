@@ -23,4 +23,9 @@ namespace prime::renderer
 	{
 		s_API->clearColor(color);
 	}
+
+	void RenderCommand::viewportResize(u32 width, u32 height)
+	{
+		s_API->viewportResize(width, height);
+	}
 }
