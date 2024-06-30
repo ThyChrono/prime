@@ -8,7 +8,8 @@ namespace prime::renderer
 {
 	enum VertexType
 	{
-		vertexType_position
+		vertexType_position,
+		vertexType_color
 	};
 
 	static u32 getVertexTypeSize(const VertexType type)
@@ -16,6 +17,7 @@ namespace prime::renderer
 		switch (type)
 		{
 		case vertexType_position: return 12; break;
+		case vertexType_color: return 16; break;
 		}
 		return 0;
 	}
@@ -25,6 +27,7 @@ namespace prime::renderer
 		switch (type)
 		{
 		case vertexType_position: return 3; break;
+		case vertexType_color: return 4; break;
 		}
 		return 0;
 	}
@@ -41,13 +44,14 @@ namespace prime::renderer
 	public:
 		Vertex() = default;
 
-		Vertex(const VertexType type, const std::string& name)
+		Vertex(const VertexType type, const str& name)
 			: name(name), type(type)
 		{
 			size = getVertexTypeSize(type);
 			offset = 0;
 
 			if (type == vertexType_position) { normalize = false; }
+			if (type == vertexType_color) { normalize = false; }
 		}
 	};
 
@@ -68,7 +72,6 @@ namespace prime::renderer
 		void process()
 		{
 			i64 offset = 0;
-
 			m_stride = 0;
 			for (Vertex& vertex : m_vertices)
 			{

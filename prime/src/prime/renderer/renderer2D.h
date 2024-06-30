@@ -11,6 +11,6 @@ namespace prime::renderer
 		static void begin();
 		static void end();
 
-		static void drawSprite(const maths::vec3& pos);
+		static void drawSprite(const maths::vec3& pos, const maths::vec2& scale, f32 rotation, const maths::vec4& color);
 	};
 }

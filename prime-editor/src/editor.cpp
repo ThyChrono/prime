@@ -19,7 +19,7 @@ namespace prime
 		renderer::RenderCommand::clear();
 
 		renderer::Renderer2D::begin();
-		renderer::Renderer2D::drawSprite( { 0.0f,0.0f, 0.0f });
+		renderer::Renderer2D::drawSprite({ 0.0f,0.0f, 0.0f }, { .5f, .5f }, 0.0f, { 0.0f, 0.0f, 1.0f, 1.0f });
 		renderer::Renderer2D::end();
 	}
 

@@ -42,8 +42,8 @@ namespace prime::renderer
 		s_API->end();
 	}
 
-	void Renderer2D::drawSprite(const maths::vec3& pos)
+	void Renderer2D::drawSprite(const maths::vec3& pos, const maths::vec2& scale, f32 rotation, const maths::vec4& color)
 	{
-		s_API->drawSprite(pos);
+		s_API->drawSprite(pos,scale, rotation, color);
 	}
 }

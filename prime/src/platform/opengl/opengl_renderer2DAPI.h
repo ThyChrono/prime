@@ -15,6 +15,6 @@ namespace prime::renderer
 		void begin() override;
 		void end() override;
 
-		void drawSprite(const maths::vec3& pos) override;
+		void drawSprite(const maths::vec3& pos, const maths::vec2& scale, f32 rotation, const maths::vec4& color) override;
 	};
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "prime/core/defines.h"
+
 #include <glm/glm.hpp>
 
 namespace prime::maths
@@ -16,5 +18,5 @@ namespace prime::maths
     /** @brief a mat4 */
     using mat4 = glm::mat4;
 
-    mat4 getTransform(const vec3& pos);
+    mat4 getTransform(const maths::vec3& pos, const maths::vec2& scale, f32 rotation);
 }
