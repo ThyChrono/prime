@@ -5,7 +5,7 @@ namespace prime
 {
 	void Editor::init()
 	{
-
+		renderer::RenderCommand::clearColor({ .2f, .2f, .2f, 1.0f });
 	}
 
 	void Editor::shutdown()
@@ -15,7 +15,7 @@ namespace prime
 
 	void Editor::update()
 	{
-
+		renderer::RenderCommand::clear();
 	}
 
 	core::GameConfig Editor::GetConfig()

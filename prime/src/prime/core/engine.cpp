@@ -3,6 +3,7 @@
 #include "engine.h"
 #include "dispatcher.h"
 #include "events.h"
+#include "prime/renderer/render_command.h"
 
 namespace prime::core
 {
@@ -29,6 +30,9 @@ namespace prime::core
 
 		// dispatcher
 		Dispatcher::get().sink<WindowCloseEvent>().connect<OnWidowClose>();
+
+		// renderer
+		renderer::RenderCommand::init();
 
 		game->init();
 		s_running = true;
