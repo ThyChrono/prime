@@ -5,6 +5,7 @@
 #include "prime/core/dispatcher.h"
 #include "prime/core/events.h"
 #include "render_command.h"
+#include "prime/scene/components.h"
 
 #define MAX_SPRITES 10000
 
@@ -33,7 +34,7 @@ namespace prime::renderer
 	{
 		s_API->shutdown();
 	}
-
+	
 	void Renderer2D::begin()
 	{
 		s_API->begin();

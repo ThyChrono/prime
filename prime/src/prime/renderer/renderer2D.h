@@ -1,5 +1,7 @@
 #pragma once
 
+#include "prime/maths/maths.h"
+
 namespace prime::renderer
 {
 	class Renderer2D

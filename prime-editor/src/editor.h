@@ -6,6 +6,9 @@ namespace prime {
 
 	class Editor : public core::Game
 	{
+	private:
+		Ref<scene::Scene> m_scene;
+
 	public:
 		void init() override;
 		void shutdown() override;

@@ -23,5 +23,5 @@ namespace prime::maths
     /** @brief a mat4 */
     using mat4 = glm::mat4;
 
-    mat4 getTransform2D(const scene::Transform& transform);
+    mat4 getTransform(const scene::Transform& transform);
 }

@@ -7,6 +7,9 @@ namespace prime
 	{
 		renderer::RenderCommand::clearColor({ .2f, .2f, .2f, 1.0f });
 		renderer::Renderer2D::init();
+
+		m_scene = createRef<scene::Scene>();
+		scene::Entity entity = m_scene->createEntity();
 	}
 
 	void Editor::shutdown()
@@ -17,10 +20,7 @@ namespace prime
 	void Editor::update()
 	{
 		renderer::RenderCommand::clear();
-
-		renderer::Renderer2D::begin();
-		renderer::Renderer2D::drawSprite(scene::Transform(), { 0.0f, 0.0f, 1.0f, 1.0f });
-		renderer::Renderer2D::end();
+		m_scene->render();
 	}
 
 	core::GameConfig Editor::GetConfig()

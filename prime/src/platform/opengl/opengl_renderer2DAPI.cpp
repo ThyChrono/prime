@@ -158,7 +158,7 @@ namespace prime::renderer
 
 	void OpenGLRenderer2DAPI::drawSprite(const scene::Transform& transform, const maths::vec4& color)
 	{
-		maths::mat4 matrix = maths::getTransform2D(transform);
+		maths::mat4 matrix = maths::getTransform(transform);
 		nextBatch();
 
 		for (size_t i = 0; i < 4; i++)

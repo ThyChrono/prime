@@ -20,3 +20,5 @@
 
 // scene
 #include "scene/components.h"
+#include "scene/entity.h"
+#include "scene/scene.h"
