@@ -16,6 +16,8 @@ namespace prime::renderer
 
 	struct Data
 	{
+		u32 max_vertices = 0, max_sprites = 0, max_indices = 0;
+
 		// sprite
 		u32 s_vertexarray = 0, s_vertexbuffer = 0, s_indexbuffer = 0;
 		u32 s_index_count = 0;
@@ -83,12 +85,6 @@ namespace prime::renderer
 		return program;
 	}
 
-	static void start_batch()
-	{
-		s_data.s_index_count = 0;
-		s_data.s_vertexbuffer_ptr = s_data.s_vertexbuffer_base;
-	}
-
 	static GLenum VertexTypeToOpenGLType(VertexType type)
 	{
 		switch (type)
@@ -118,56 +114,12 @@ namespace prime::renderer
 		}
 	}
 
-	static void initSpriteRendering(u32 max_sprites)
-	{
-		VertexLayout s_layout;
-		s_layout.addVertex(Vertex(vertexType_position, "a_position"));
-		s_layout.addVertex(Vertex(vertexType_color, "a_color"));
-		s_layout.process();
-
-		s_data.s_vertices[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
-		s_data.s_vertices[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
-		s_data.s_vertices[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
-		s_data.s_vertices[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
-
-		glGenVertexArrays(1, &s_data.s_vertexarray);
-		glBindVertexArray(s_data.s_vertexarray);
-
-		glGenBuffers(1, &s_data.s_vertexbuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, s_data.s_vertexbuffer);
-		glBufferData(GL_ARRAY_BUFFER, (max_sprites * 4) * sizeof(SpriteVertex), nullptr, GL_DYNAMIC_DRAW);
-		SunmitLayout(s_layout);
-
-		s_data.s_vertexbuffer_base = new SpriteVertex[max_sprites * 4];
-		u32* s_indices = new u32[max_sprites * 6];
-
-		u32 offset = 0;
-		for (u32 i = 0; i < max_sprites * 6; i += 6)
-		{
-			s_indices[i + 0] = offset + 0;
-			s_indices[i + 1] = offset + 1;
-			s_indices[i + 2] = offset + 2;
-
-			s_indices[i + 3] = offset + 2;
-			s_indices[i + 4] = offset + 3;
-			s_indices[i + 5] = offset + 0;
-
-			offset += 4;
-		}
-
-		glGenBuffers(1, &s_data.s_indexbuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_data.s_indexbuffer);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, max_sprites * 6, s_indices, GL_STATIC_DRAW);
-		delete[] s_indices;
-
-		s_data.s_vertexshader = createShader(s_sprite_vertexshader, GL_VERTEX_SHADER);
-		s_data.s_fragmentshader = createShader(s_sprite_fragmentshader, GL_FRAGMENT_SHADER);
-		s_data.s_program = createProgram(s_data.s_vertexshader, s_data.s_fragmentshader);
-	}
-
 	void OpenGLRenderer2DAPI::init(u32 max_sprites)
 	{
-		initSpriteRendering(max_sprites);
+		s_data.max_sprites = max_sprites;
+		s_data.max_indices = max_sprites * 6;
+		s_data.max_vertices = max_sprites * 4;
+		initSpriteRendering();
 	}
 
 	void OpenGLRenderer2DAPI::shutdown()
@@ -187,7 +139,7 @@ namespace prime::renderer
 
 	void OpenGLRenderer2DAPI::begin()
 	{
-		start_batch();
+		startBatch();
 	}
 	
 	void OpenGLRenderer2DAPI::end()
@@ -204,16 +156,79 @@ namespace prime::renderer
 		}
 	}
 
-	void OpenGLRenderer2DAPI::drawSprite(const maths::vec3& pos, const maths::vec2& scale, f32 rotation, const maths::vec4& color)
+	void OpenGLRenderer2DAPI::drawSprite(const scene::Transform& transform, const maths::vec4& color)
 	{
-		maths::mat4 transform = maths::getTransform(pos, scale, rotation);
+		maths::mat4 matrix = maths::getTransform2D(transform);
+		nextBatch();
 
 		for (size_t i = 0; i < 4; i++)
 		{
-			s_data.s_vertexbuffer_ptr->position = transform * s_data.s_vertices[i];
+			s_data.s_vertexbuffer_ptr->position = matrix * s_data.s_vertices[i];
 			s_data.s_vertexbuffer_ptr->color = color;
 			s_data.s_vertexbuffer_ptr++;
 		}
 		s_data.s_index_count += 6;
+	}
+
+	void OpenGLRenderer2DAPI::startBatch()
+	{
+		s_data.s_index_count = 0;
+		s_data.s_vertexbuffer_ptr = s_data.s_vertexbuffer_base;
+	}
+
+	void OpenGLRenderer2DAPI::nextBatch()
+	{
+		if (s_data.s_index_count == s_data.max_indices)
+		{
+			end();
+			startBatch();
+		}
+	}
+
+	void OpenGLRenderer2DAPI::initSpriteRendering()
+	{
+		VertexLayout s_layout;
+		s_layout.addVertex(Vertex(vertexType_position, "a_position"));
+		s_layout.addVertex(Vertex(vertexType_color, "a_color"));
+		s_layout.process();
+
+		s_data.s_vertices[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
+		s_data.s_vertices[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
+		s_data.s_vertices[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
+		s_data.s_vertices[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
+
+		glGenVertexArrays(1, &s_data.s_vertexarray);
+		glBindVertexArray(s_data.s_vertexarray);
+
+		glGenBuffers(1, &s_data.s_vertexbuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, s_data.s_vertexbuffer);
+		glBufferData(GL_ARRAY_BUFFER, s_data.max_vertices * sizeof(SpriteVertex), nullptr, GL_DYNAMIC_DRAW);
+		SunmitLayout(s_layout);
+
+		s_data.s_vertexbuffer_base = new SpriteVertex[s_data.max_vertices];
+		u32* s_indices = new u32[s_data.max_indices];
+
+		u32 offset = 0;
+		for (u32 i = 0; i < s_data.max_indices; i += 6)
+		{
+			s_indices[i + 0] = offset + 0;
+			s_indices[i + 1] = offset + 1;
+			s_indices[i + 2] = offset + 2;
+
+			s_indices[i + 3] = offset + 2;
+			s_indices[i + 4] = offset + 3;
+			s_indices[i + 5] = offset + 0;
+
+			offset += 4;
+		}
+
+		glGenBuffers(1, &s_data.s_indexbuffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_data.s_indexbuffer);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, s_data.max_indices, s_indices, GL_STATIC_DRAW);
+		delete[] s_indices;
+
+		s_data.s_vertexshader = createShader(s_sprite_vertexshader, GL_VERTEX_SHADER);
+		s_data.s_fragmentshader = createShader(s_sprite_fragmentshader, GL_FRAGMENT_SHADER);
+		s_data.s_program = createProgram(s_data.s_vertexshader, s_data.s_fragmentshader);
 	}
 }

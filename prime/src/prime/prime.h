@@ -17,3 +17,6 @@
 #include "renderer/renderer2D.h"
 #include "renderer/render_command.h"
 #include "renderer/vertex.h"
+
+// scene
+#include "scene/components.h"

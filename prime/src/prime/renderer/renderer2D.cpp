@@ -6,6 +6,8 @@
 #include "prime/core/events.h"
 #include "render_command.h"
 
+#define MAX_SPRITES 10000
+
 namespace prime::renderer
 {
 	static Scope<Renderer2DAPI> s_API;
@@ -19,10 +21,10 @@ namespace prime::renderer
 		}
 	}
 
-	void Renderer2D::init(u32 max_sprites_per_draw)
+	void Renderer2D::init()
 	{
 		if (!s_API) { s_API = Renderer2DAPI::create(); }
-		s_API->init(max_sprites_per_draw);
+		s_API->init(MAX_SPRITES);
 
 		core::Dispatcher::get().sink<core::WindowResizeEvent>().connect<&OnWindowResize>();
 	}
@@ -42,8 +44,8 @@ namespace prime::renderer
 		s_API->end();
 	}
 
-	void Renderer2D::drawSprite(const maths::vec3& pos, const maths::vec2& scale, f32 rotation, const maths::vec4& color)
+	void Renderer2D::drawSprite(const scene::Transform& transform, const maths::vec4& color)
 	{
-		s_API->drawSprite(pos,scale, rotation, color);
+		s_API->drawSprite(transform, color);
 	}
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "prime/core/defines.h"
+#include "prime/scene/components.h"
 
 namespace prime::renderer
 {
@@ -15,7 +16,7 @@ namespace prime::renderer
 		virtual void begin() = 0;
 		virtual void end() = 0;
 
-		virtual void drawSprite(const maths::vec3& pos, const maths::vec2& scale, f32 rotation, const maths::vec4& color) = 0;
+		virtual void drawSprite(const scene::Transform& transform, const maths::vec4& color) = 0;
 
 		static Scope<Renderer2DAPI> create();
 	};

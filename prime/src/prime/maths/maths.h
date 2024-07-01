@@ -4,6 +4,11 @@
 
 #include <glm/glm.hpp>
 
+namespace prime::scene {
+
+    class Transform;
+}
+
 namespace prime::maths
 {
     /** @brief a vec2 */
@@ -18,5 +23,5 @@ namespace prime::maths
     /** @brief a mat4 */
     using mat4 = glm::mat4;
 
-    mat4 getTransform(const maths::vec3& pos, const maths::vec2& scale, f32 rotation);
+    mat4 getTransform2D(const scene::Transform& transform);
 }
