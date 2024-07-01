@@ -18,4 +18,14 @@ namespace prime::scene
 		Transform(const maths::vec3& pos, const maths::vec3& scale) 
 			: position(pos), scale(scale) {}
 	};
+
+	class SpriteRenderer2D
+	{
+	public:
+		maths::vec4 color = maths::vec4(1.0f);
+
+	public:
+		SpriteRenderer2D() = default;
+		SpriteRenderer2D(const maths::vec4& color) : color(color) {}
+	};
 }

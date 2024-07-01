@@ -24,11 +24,11 @@ namespace prime::scene
 	{
 		renderer::Renderer2D::begin();
 
-		auto s_entities = m_registry.view<Transform>();
+		auto s_entities = m_registry.view<Transform, SpriteRenderer2D>();
 		for (entt::entity s_entity : s_entities)
 		{
-			Transform& s_entity_t = s_entities.get<Transform>(s_entity);
-			renderer::Renderer2D::drawSprite(s_entity_t, { 1.0f, 0.0f, 0.0f, 1.0f });
+			auto [s_entity_t, s_entity_s] = s_entities.get<Transform, SpriteRenderer2D>(s_entity);
+			renderer::Renderer2D::drawSprite(s_entity_t, s_entity_s.color);
 		}
 
 		renderer::Renderer2D::end();

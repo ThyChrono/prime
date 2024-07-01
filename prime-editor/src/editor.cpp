@@ -10,6 +10,7 @@ namespace prime
 
 		m_scene = createRef<scene::Scene>();
 		scene::Entity entity = m_scene->createEntity();
+		entity.addComponent<scene::SpriteRenderer2D>();
 	}
 
 	void Editor::shutdown()
